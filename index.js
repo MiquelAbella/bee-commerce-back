@@ -16,7 +16,13 @@ const { getHotelsByCity } = require("./controllers/hotels");
 
 dbConnection();
 
-app.use(cors());
+const corsOptions = {
+  origin: "*",
+  credentials: false,
+  optionSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.post("/checkout", async (req, res) => {
