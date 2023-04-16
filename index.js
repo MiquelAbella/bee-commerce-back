@@ -2,15 +2,14 @@ const express = require("express");
 const app = express();
 require("dotenv").config();
 const Stripe = require("stripe");
-const bodyParser = require("body-parser");
+const bodyParse = require("body-parser");
 const { createUser, loginUser, getUserById } = require("./controllers/user");
-
-const jsonParser = bodyParser.json();
 
 const stripe = new Stripe(process.env.STRIPE_KEY);
 
 const cors = require("cors");
 app.use(cors());
+app.use(bodyParse.urlencoded({ extended: true }));
 const { dbConnection } = require("./database/config");
 const { getCities } = require("./controllers/cities");
 const { getHotelsByCity } = require("./controllers/hotels");
@@ -44,4 +43,4 @@ app.get("/cities", getCities);
 app.get("/hotels/:name", getHotelsByCity);
 app.get("/users/:uid", getUserById);
 
-app.listen(4242, () => console.log(`Listening on port ${4242}!`));
+app.listen(4242, "0.0.0.0", () => console.log(`Listening on port ${4242}!`));
