@@ -8,7 +8,11 @@ const { createUser, loginUser, getUserById } = require("./controllers/user");
 const stripe = new Stripe(process.env.STRIPE_KEY);
 
 const cors = require("cors");
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://bee-commerce-front.vercel.app/",
+  })
+);
 app.use(bodyParse.urlencoded({ extended: true }));
 const { dbConnection } = require("./database/config");
 const { getCities } = require("./controllers/cities");
