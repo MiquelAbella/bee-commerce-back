@@ -10,7 +10,7 @@ const stripe = new Stripe(process.env.STRIPE_KEY);
 const cors = require("cors");
 app.use(
   cors({
-    origin: "https://bee-commerce-front.vercel.app/",
+    origin: "https://bee-commerce-front.vercel.app",
   })
 );
 app.use(bodyParse.urlencoded({ extended: true }));
