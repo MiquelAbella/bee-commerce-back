@@ -8,9 +8,9 @@ const { createUser, loginUser, getUserById } = require("./controllers/user");
 const jsonParser = bodyParser.json();
 
 const stripe = new Stripe(process.env.STRIPE_KEY);
-app.use(cors());
 
 const cors = require("cors");
+app.use(cors());
 const { dbConnection } = require("./database/config");
 const { getCities } = require("./controllers/cities");
 const { getHotelsByCity } = require("./controllers/hotels");
