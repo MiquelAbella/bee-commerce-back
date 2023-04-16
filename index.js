@@ -16,13 +16,13 @@ const { getHotelsByCity } = require("./controllers/hotels");
 
 dbConnection();
 
-const corsOptions = {
-  origin: "*",
-  credentials: false,
-  optionSuccessStatus: 200,
-};
-
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: `https://bee-commerce-front-3ktywtgqg-miquelabella.vercel.app/`,
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 app.post("/checkout", async (req, res) => {
