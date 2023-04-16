@@ -8,6 +8,7 @@ const { createUser, loginUser, getUserById } = require("./controllers/user");
 const jsonParser = bodyParser.json();
 
 const stripe = new Stripe(process.env.STRIPE_KEY);
+app.use(cors());
 
 const cors = require("cors");
 const { dbConnection } = require("./database/config");
@@ -16,13 +17,6 @@ const { getHotelsByCity } = require("./controllers/hotels");
 
 dbConnection();
 
-app.use(
-  cors({
-    origin: `https://bee-commerce-front-3ktywtgqg-miquelabella.vercel.app/`,
-    methods: "GET,POST,PUT,DELETE",
-    credentials: false,
-  })
-);
 app.use(express.json());
 
 app.post("/checkout", async (req, res) => {
