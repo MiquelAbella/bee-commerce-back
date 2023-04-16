@@ -20,7 +20,7 @@ app.use(
   cors({
     origin: `https://bee-commerce-front-3ktywtgqg-miquelabella.vercel.app/`,
     methods: "GET,POST,PUT,DELETE",
-    credentials: true,
+    credentials: false,
   })
 );
 app.use(express.json());
