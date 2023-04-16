@@ -46,5 +46,5 @@ app.post("/loginUser", loginUser);
 app.get("/cities", getCities);
 app.get("/hotels/:name", getHotelsByCity);
 app.get("/users/:uid", getUserById);
-
-app.listen("0.0.0.0:4242", () => console.log(`Listening on port ${4242}!`));
+const port = process.env.PORT || 4242
+app.listen(port, '0.0.0.0', () => console.log(`Listening on port ${4242}!`));
