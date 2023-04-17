@@ -20,16 +20,19 @@ const createUser = async (req, res) => {
 
     user = new User(req.body);
     user.history = [];
-    console.log(user)
+    console.log(user);
     await user.save();
 
     res.status(200).json({
       ok: true,
-      user,
+      user: {
+        fullName: user.fullName,
+        email: user.email,
+        history: user.history,
+      },
     });
   } catch (error) {
-    console.log(error)
-    res.status(503).json("something happened");
+    res.status(503).json({ ok: false, msg: "something happened" });
   }
 };
 
