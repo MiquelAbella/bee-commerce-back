@@ -52,5 +52,6 @@ app.post("/addhistory", addHistory);
 app.get("/cities", getCities);
 app.get("/hotels/:name", getHotelsByCity);
 app.get("/users/:uid", getUserById);
+
 const port = process.env.PORT || 4242;
 app.listen(port, "0.0.0.0", () => console.log(`Listening on port ${4242}!`));
