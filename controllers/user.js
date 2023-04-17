@@ -20,6 +20,7 @@ const createUser = async (req, res) => {
 
     user = new User(req.body);
     user.history = [];
+    console.log(user)
     await user.save();
 
     res.status(200).json({
@@ -27,6 +28,7 @@ const createUser = async (req, res) => {
       user,
     });
   } catch (error) {
+    console.log(error)
     res.status(503).json("something happened");
   }
 };
