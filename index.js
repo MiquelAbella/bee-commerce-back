@@ -3,7 +3,12 @@ const app = express();
 require("dotenv").config();
 const Stripe = require("stripe");
 const bodyParse = require("body-parser");
-const { createUser, loginUser, getUserById } = require("./controllers/user");
+const {
+  createUser,
+  loginUser,
+  getUserById,
+  addHistory,
+} = require("./controllers/user");
 
 const stripe = new Stripe(process.env.STRIPE_KEY);
 
@@ -43,8 +48,9 @@ app.post("/checkout", async (req, res) => {
 
 app.post("/createUser", createUser);
 app.post("/loginUser", loginUser);
+app.post("/addhistory", addHistory);
 app.get("/cities", getCities);
 app.get("/hotels/:name", getHotelsByCity);
 app.get("/users/:uid", getUserById);
-const port = process.env.PORT || 4242
-app.listen(port, '0.0.0.0', () => console.log(`Listening on port ${4242}!`));
+const port = process.env.PORT || 4242;
+app.listen(port, "0.0.0.0", () => console.log(`Listening on port ${4242}!`));

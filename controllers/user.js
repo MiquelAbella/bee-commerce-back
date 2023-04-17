@@ -61,8 +61,8 @@ const loginUser = async (req, res) => {
 
 const getUserById = async (req, res) => {
   const { uid } = req.params;
+
   let user = await User.findOne({ _id: uid });
-  console.log(user);
 
   if (!user) {
     return res.json({
@@ -79,4 +79,26 @@ const getUserById = async (req, res) => {
   });
 };
 
-module.exports = { createUser, loginUser, getUserById };
+const addHistory = async (req, res) => {
+  const { uid, product } = req.body;
+
+  try {
+    let user = await User.findOne({ _id: uid });
+
+    user.history.push(product);
+
+    await user.save();
+
+    return res.json({
+      ok: true,
+      user,
+    });
+  } catch (error) {
+    return res.json({
+      ok: false,
+      msg: error,
+    });
+  }
+};
+
+module.exports = { createUser, loginUser, getUserById, addHistory };
