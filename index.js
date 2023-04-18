@@ -13,11 +13,7 @@ const {
 const stripe = new Stripe(process.env.STRIPE_KEY);
 
 const cors = require("cors");
-app.use(
-  cors({
-    origin: "https://main--illustrious-raindrop-0af8fd.netlify.app/",
-  })
-);
+app.use(cors());
 app.use(bodyParse.urlencoded({ extended: true }));
 const { dbConnection } = require("./database/config");
 const { getCities } = require("./controllers/cities");
