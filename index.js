@@ -15,7 +15,7 @@ const stripe = new Stripe(process.env.STRIPE_KEY);
 const cors = require("cors");
 app.use(
   cors({
-    origin: "https://main--illustrious-raindrop-0af8fd.netlify.app",
+    origin: "https://illustrious-raindrop-0af8fd.netlify.app",
   })
 );
 app.use(bodyParse.urlencoded({ extended: true }));
@@ -43,6 +43,8 @@ app.post("/checkout", async (req, res) => {
     res.send({ ok: false });
   }
 });
+
+/////////////////////////////7
 
 app.post("/createUser", createUser);
 app.post("/loginUser", loginUser);
