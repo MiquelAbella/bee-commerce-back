@@ -44,8 +44,6 @@ app.post("/checkout", async (req, res) => {
   }
 });
 
-/////////////////////////////7
-
 app.post("/createUser", createUser);
 app.post("/loginUser", loginUser);
 app.post("/addhistory", addHistory);
