@@ -24,7 +24,7 @@ const createUser = async (req, res) => {
 
     await user.save();
 
-    res.status(200).json({
+    return res.status(200).json({
       ok: true,
       user: {
         fullName: user.fullName,
@@ -33,7 +33,7 @@ const createUser = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(503).json({ ok: false, msg: "something happened" });
+    return res.status(503).json({ ok: false, msg: "something happened" });
   }
 };
 
@@ -52,13 +52,13 @@ const loginUser = async (req, res) => {
   const isValidPassword = await bcrypt.compare(password, user.password);
 
   if (!isValidPassword) {
-    res.status(503).json({
+    return res.status(503).json({
       ok: false,
       msg: "User and password do not match",
     });
   }
 
-  res.status(200).json({
+  return res.status(200).json({
     ok: true,
     user: { fullName: user.fullName, email: user.email, history: user.history },
   });
@@ -78,7 +78,7 @@ const getUserById = async (req, res) => {
 
   user.password = undefined;
 
-  res.status(200).json({
+  return res.status(200).json({
     ok: true,
     user,
   });
