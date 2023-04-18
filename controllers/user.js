@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const bcrypt = require("bcryptjs");
+// const { v4: uuidv4 } = require("uuid");
 
 const createUser = async (req, res) => {
   try {
@@ -17,14 +17,13 @@ const createUser = async (req, res) => {
         msg: "User already exist",
       });
     }
-    const salt = bcrypt.genSaltSync(10);
-    const hashedPassword = bcrypt.hashSync(password, salt);
 
-    user = new User({ email, fullName, password: hashedPassword, history: [] });
-
+    user = new User(req.body);
+    user.history = [];
+    console.log(user);
     await user.save();
 
-    return res.status(200).json({
+    res.status(200).json({
       ok: true,
       user: {
         fullName: user.fullName,
@@ -33,7 +32,7 @@ const createUser = async (req, res) => {
       },
     });
   } catch (error) {
-    return res.status(503).json({ ok: false, msg: "something happened" });
+    res.status(503).json({ ok: false, msg: "something happened" });
   }
 };
 
@@ -49,18 +48,19 @@ const loginUser = async (req, res) => {
     });
   }
 
-  const isValidPassword = await bcrypt.compare(password, user.password);
+  const isValidPassword = user.password === password;
 
   if (!isValidPassword) {
-    return res.status(503).json({
+    return res.json({
       ok: false,
-      msg: "User and password do not match",
+      msg: "email and password do not match",
     });
   }
+  user.password = undefined;
 
-  return res.status(200).json({
+  res.status(200).json({
     ok: true,
-    user: { fullName: user.fullName, email: user.email, history: user.history },
+    user,
   });
 };
 
@@ -78,7 +78,7 @@ const getUserById = async (req, res) => {
 
   user.password = undefined;
 
-  return res.status(200).json({
+  res.status(200).json({
     ok: true,
     user,
   });
@@ -88,19 +88,15 @@ const addHistory = async (req, res) => {
   const { uid, product } = req.body;
 
   try {
-    let user = await User.findOneAndUpdate(
-      { _id: uid },
-      { $push: { history: product } },
-      { new: true }
-    );
+    let user = await User.findOne({ _id: uid });
+
+    user.history.push(product);
+
+    await user.save();
 
     return res.json({
       ok: true,
-      user: {
-        fullName: user.fullName,
-        email: user.email,
-        history: user.history,
-      },
+      user,
     });
   } catch (error) {
     return res.json({
